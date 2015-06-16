@@ -120,7 +120,7 @@ check_include_file(unistd.h HAVE_UNISTD_H)
 check_include_file(linux/types.h HAVE_LINUX_TYPES_H)
 check_include_file(linux/errqueue.h HAVE_LINUX_ERRQUEUE_H)
 
-set(datadir "${CMAKE_INSTALL_PREFIX}/local/share/twinkle")
+set(datadir "${CMAKE_INSTALL_PREFIX}/share/twinkle")
 configure_file(twinkle_config.h.in twinkle_config.h)
 configure_file(twinkle.desktop.in twinkle.desktop)
 
