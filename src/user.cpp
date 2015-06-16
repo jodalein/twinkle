@@ -372,6 +372,9 @@ t_user::t_user() {
 	codecs.push_back(CODEC_G711_ALAW);
 	codecs.push_back(CODEC_G711_ULAW);
 	codecs.push_back(CODEC_GSM);
+#ifdef HAVE_BCG729
+	codecs.push_back(CODEC_G729A);
+#endif
 	ptime = 20;
 	out_obey_far_end_codec_pref = true;
 	in_obey_far_end_codec_pref = true;
@@ -2256,6 +2259,10 @@ bool t_user::read_config(const string &filename, string &error_msg) {
 					codecs.push_back(CODEC_G726_32);
 				} else if (codec == "g726-40") {
 					codecs.push_back(CODEC_G726_40);
+#ifdef HAVE_BCG729
+				} else if (codec == "g729a") {
+					codecs.push_back(CODEC_G729A);
+#endif
 				} else {
 					msg = "Syntax error in file ";
 					msg += f;
@@ -2672,6 +2679,9 @@ bool t_user::write_config(const string &filename, string &error_msg) {
 			break;
 		case CODEC_G726_40:
 			config << "g726-40";
+			break;
+		case CODEC_G729A:
+			config << "g729a";
 			break;
 		default:
 			assert(false);

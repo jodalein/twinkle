@@ -138,6 +138,9 @@ string get_rtpmap(unsigned format, t_audio_codec codec) {
 	case CODEC_G726_40:
 		rtpmap += SDP_RTPMAP_G726_40;
 		break;
+	case CODEC_G729A:
+		rtpmap += SDP_RTPMAP_G729A;
+		break;
 	case CODEC_TELEPHONE_EVENT:
 		rtpmap += SDP_RTPMAP_TELEPHONE_EV;
 		break;
@@ -342,6 +345,16 @@ void t_sdp_media::add_format(unsigned short f, t_audio_codec codec) {
 		string fmtp = int2str(f);
 		fmtp += ' ';
 		fmtp += "0-15";
+
+		attributes.push_back(t_sdp_attr("fmtp", fmtp));
+	}
+	else if (codec == CODEC_G729A)
+	{
+		string fmtp = int2str(f);
+
+		fmtp += ' ';
+		fmtp += "annexb=no"; // annexb=no means G729A
+
 		attributes.push_back(t_sdp_attr("fmtp", fmtp));
 	}
 }
@@ -648,6 +661,8 @@ t_audio_codec t_sdp::get_rtpmap_codec(const string &rtpmap) const {
 		return CODEC_G726_32;
 	} else if (cmp_nocase(codec_name, SDP_AC_NAME_G726_40) == 0 && sample_rate == 8000) {
 		return CODEC_G726_40;
+	} else if (cmp_nocase(codec_name, SDP_AC_NAME_G729) == 0 && sample_rate == 8000) {
+		return CODEC_G729A;
 	} else if (cmp_nocase(codec_name, SDP_AC_NAME_TELEPHONE_EV) == 0) {
 		return CODEC_TELEPHONE_EVENT;
 	}
